@@ -7,11 +7,12 @@ $table_name = ""; // Initializing $table_name variable
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $itemName = $_POST['item_name'];
     $itemId = $_POST['item_id'];
+    $table_name = $_POST['table_name'];
 
     // Set default status value
     $status = "OK";
 
-    $result = mysqli_query($mysqli, "INSERT INTO mk2 (item_id, item_name, status) VALUES ('$itemId', '$itemName', '$status')");
+    $result = mysqli_query($mysqli, "INSERT INTO $table_name (item_id, item_name, status) VALUES ('$itemId', '$itemName', '$status')");
     // Execute the query and handle success/error messages
 }
 ?>
