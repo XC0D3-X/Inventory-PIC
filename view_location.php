@@ -14,6 +14,9 @@ if (isset($_GET['id'])) {
         case 3:
             header("Location: Makmal-Komputer4.php");
             break;
+        case 4:
+            header("Location: Makmal-Komputer5.php");
+            break;
 
         default:
             echo "Location ID not found.";
