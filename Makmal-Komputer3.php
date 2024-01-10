@@ -28,7 +28,8 @@ $result = performSearch($tableName, $search, $entries, $mysqli);
                 </strong>
             </div>
             <div class="panel-body">
-                <form method="get" action="">
+
+            <form method="get" action="">
                     <label for="entries">Show:</label>
                     <select id="entries" name="entries" onchange="this.form.submit()">
                         <option value="10" <?php if($entries == '10') echo 'selected'; ?>>10 entries</option>
@@ -46,26 +47,28 @@ $result = performSearch($tableName, $search, $entries, $mysqli);
 
                 <?php if (mysqli_num_rows($result) > 0): ?>
                     <table class="table table-bordered table-striped">
+                        <!-- Table headers -->
                         <thead>
                             <tr>
                                 <th class="text-center" style="width: 50px;">No</th>
-                                <th> Hardware Name </th>action
+                                <th> Hardware Name </th>
                                 <th class="text-center" style="width: 15%;"> Status</th>
                                 <th class="text-center" style="width: 15%;"> Action</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php
-                            while($res = mysqli_fetch_array($result)) {
-                                echo "<tr>";  
-                                echo "<td>".$res['item_id']."</td>"; 
-                                echo "<td>".$res['item_name']."</td>";
-                                echo "<td>".$res['status']."</td>";
-                                echo "<td>","<center><Update  href=\"edit.php?item_id=".$res['item_id']."\"class=\"btn btn-primary btn-md\">Update</center></td>
-                                ";
-                                echo "</tr>";
-                            }
-                            ?>
+                            <?php while($res = mysqli_fetch_array($result)): ?>
+                                <tr>  
+                                    <td><?php echo $res['item_id']; ?></td>
+                                    <td><?php echo $res['item_name']; ?></td>
+                                    <td><?php echo $res['status']; ?></td>
+                                    <td>
+                                        <center>
+                                            <button class="btn btn-primary btn-md" onclick="openUpdateForm('<?php echo $res['item_id']; ?>', '<?php echo $res['item_name']; ?>', '<?php echo $res['status']; ?>')">Update</button>
+                                        </center>
+                                    </td>
+                                </tr>
+                            <?php endwhile; ?>
                         </tbody>
                     </table>
                 <?php else: ?>
@@ -75,4 +78,43 @@ $result = performSearch($tableName, $search, $entries, $mysqli);
         </div>
     </div>
 </div>
+
+<!-- Update form -->
+<div id="updateForm" style="display: none;">
+    <h2>Update Item</h2>
+    <form method="post" action="">
+        <input type="text" id="updateItemId" readonly name="item_id">
+        <label for="updateItemName">Item Name:</label>
+        <input type="text" id="updateItemName" name="item_name">
+        
+        <label for="updateItemStatus">Status:</label>
+        <input type="text" id="updateItemStatus" name="status">
+        
+        <input type="submit" name="update" value="Update Item">
+    </form>
+</div>
+
+<script>
+    function openUpdateForm(itemId, itemName, status) {
+        // Set the item details in the update form
+        document.getElementById("updateItemId").value = itemId;
+        document.getElementById("updateItemName").value = itemName;
+        document.getElementById("updateItemStatus").value = status;
+        document.getElementById("updateForm").style.display = "block";
+    }
+</script>
+
+<?php
+
+if (isset($_POST['update'])){
+    $item_id=$_POST['item_id'];
+    $item_name=$_POST['item_name'];
+    $status=$_POST['status'];
+    $result = mysqli_query($mysqli,"UPDATE mk3 SET item_id='$item_id', item_name='$item_name', status='$status' WHERE item_id='$item_id'") or die (mysqli_connect_error());
+    mysqli_close($mysqli);
+}
+
+?>
+
+
 <?php include_once('layouts/footer.php'); ?>
