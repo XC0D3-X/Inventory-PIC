@@ -50,8 +50,9 @@ $result = performSearch($tableName, $search, $entries, $mysqli);
                         <thead>
                             <tr>
                                 <th class="text-center" style="width: 50px;">No</th>
-                                <th> Hardware Name </th>
+                                <th> Hardware Name </th>action
                                 <th class="text-center" style="width: 15%;"> Status</th>
+                                <th class="text-center" style="width: 15%;"> Action</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -61,6 +62,8 @@ $result = performSearch($tableName, $search, $entries, $mysqli);
                                 echo "<td>".$res['item_id']."</td>"; 
                                 echo "<td>".$res['item_name']."</td>";
                                 echo "<td>".$res['status']."</td>";
+                                echo "<td>","<center><Update  href=\"edit.php?item_id=".$res['item_id']."\"class=\"btn btn-primary btn-md\">Update</center></td>
+                                ";
                                 echo "</tr>";
                             }
                             ?>
