@@ -3,7 +3,7 @@ include_once('layouts/header.php');
 include_once('search.php');
 include_once('config.php');
 
-$tableName = 'mk3'; // Default table name
+$tableName = 'mk2'; // Default table name
 $search = isset($_GET['search']) ? $_GET['search'] : '';
 if (isset($_GET['table'])) {
     $tableName = $_GET['table'];
@@ -13,18 +13,20 @@ $entries = isset($_GET['entries']) ? $_GET['entries'] : 10;
 $result = performSearch($tableName, $search, $entries, $mysqli);
 ?>
 
+
 <style>
     .add-btn {
-        width: 150px;
-        transition: box-shadow 0.5s;
+        width: 150px; /* Adjust the width as needed */
+        transition: box-shadow 0.5s; /* Add a smooth transition effect */
     }
 
     .add-btn:hover {
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add box shadow on hover */
     }
 
-    .breadcrumb {
-        background-color: #E1E1E1;
+     /* Grey background for breadcrumb */
+     .breadcrumb {
+        background-color: #E1E1E1; /* Adjust the background color as needed */
     }
 </style>
 
@@ -38,9 +40,8 @@ $result = performSearch($tableName, $search, $entries, $mysqli);
 
 <div class="col-md-12 col-12">
     <h1>List Item</h1>
-    <p>Manage all hardware in Makmal Komputer 3</p>
+    <p>Manage all hardware in Makmal Komputer 2</p>
 </div>
-
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
@@ -49,35 +50,39 @@ $result = performSearch($tableName, $search, $entries, $mysqli);
                     <span class="glyphicon glyphicon-th"></span>
                     <span>All Item</span>
                 </strong>
+                
+            </div>
+            <div class="panel-body">
+                
+
+        <div class="row">
+            <div class="col-md-8">
+                <form method="get" action="">
+                    <label for="entries">Show:</label>
+                    <select id="entries" name="entries" onchange="this.form.submit()">
+                        <option value="10" <?php if($entries == '10') echo 'selected'; ?>>10 entries</option>
+                        <option value="25" <?php if($entries == '25') echo 'selected'; ?>>25 entries</option>
+                        <option value="50" <?php if($entries == '50') echo 'selected'; ?>>50 entries</option>
+                        <option value="100" <?php if($entries == '100') echo 'selected'; ?>>100 entries</option>
+                        <option value="1000" <?php if($entries == '1000') echo 'selected'; ?>>All</option>
+                    </select>
+                </form>
+        
+                <form method="get" action="">
+                    <label for="search">Search:</label>
+                    <input type="text" id="search" name="search" placeholder="Enter search keyword">
+                    <input type="submit" value="Search">
+                </form>
+        </div>
+
+        <div class="col-md-4 text-right">
+                        <!-- Add Item button -->
+                    <button type="button" class="btn btn-secondary btn-lg add-btn" data-toggle="modal" data-target="#addItemModal">
+                        <span class="glyphicon glyphicon-plus-sign"></span> Add Item
+                    </button>
+                </div>
             </div>
 
-            <div class="panel-body">
-                <div class="row">
-                    <div class="col-md-8">
-                        <form method="get" action="">
-                            <label for="entries">Show:</label>
-                            <select id="entries" name="entries" onchange="this.form.submit()">
-                                <option value="10" <?php if ($entries == '10') echo 'selected'; ?>>10 entries</option>
-                                <option value="25" <?php if ($entries == '25') echo 'selected'; ?>>25 entries</option>
-                                <option value="50" <?php if ($entries == '50') echo 'selected'; ?>>50 entries</option>
-                                <option value="100" <?php if ($entries == '100') echo 'selected'; ?>>100 entries</option>
-                                <option value="1000" <?php if ($entries == '1000') echo 'selected'; ?>>All</option>
-                            </select>
-                        </form>
-
-                        <form method="get" action="">
-                            <label for="search">Search:</label>
-                            <input type="text" id="search" name="search" placeholder="Enter search keyword">
-                            <input type="submit" value="Search">
-                        </form>
-                    </div>
-
-                    <div class="col-md-4 text-right">
-                        <button type="button" class="btn btn-secondary btn-lg add-btn" data-toggle="modal" data-target="#addItemModal">
-                            <span class="glyphicon glyphicon-plus-sign"></span> Add Item
-                        </button>
-                    </div>
-                </div>
 <!-- add item -->
 <div class="modal fade" id="addItemModal" tabindex="-1" role="dialog">
     <div class="modal-dialog">
@@ -91,7 +96,7 @@ $result = performSearch($tableName, $search, $entries, $mysqli);
                 <div class="modal-body">
 
                 <!-- Hidden input for table name -->
-                <input type="hidden" name="tableName" value="mk3">
+                <input type="hidden" name="tableName" value="mk2">
 
                     <div class="form-group">
                         <label for="item_id" class="col-sm-4 control-label">Item ID: </label>
@@ -131,8 +136,10 @@ $result = performSearch($tableName, $search, $entries, $mysqli);
 </div>
 <!-- /add item -->
 
+
                 <?php if (mysqli_num_rows($result) > 0): ?>
                     <table class="table table-bordered table-striped">
+                        <!-- Table headers -->
                         <thead>
                             <tr>
                                 <th class="text-center" style="width: 50px;">No</th>
@@ -142,15 +149,14 @@ $result = performSearch($tableName, $search, $entries, $mysqli);
                             </tr>
                         </thead>
                         <tbody>
-                            <?php while ($res = mysqli_fetch_array($result)): ?>
-                                <tr>
+                            <?php while($res = mysqli_fetch_array($result)): ?>
+                                <tr>  
                                     <td><?php echo $res['item_id']; ?></td>
                                     <td><?php echo $res['item_name']; ?></td>
                                     <td><?php echo $res['status']; ?></td>
                                     <td>
                                         <center>
-                                            <!-- Update Item button -->
-                                            <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#updateItemModal" onclick="openUpdateForm('<?php echo $res['item_id']; ?>', '<?php echo $res['item_name']; ?>', '<?php echo $res['status']; ?>')">Update</button>
+                                            <button class="btn btn-primary btn-md" onclick="openUpdateForm('<?php echo $res['item_id']; ?>', '<?php echo $res['item_name']; ?>', '<?php echo $res['status']; ?>')">Update</button>
                                         </center>
                                     </td>
                                 </tr>
@@ -165,12 +171,11 @@ $result = performSearch($tableName, $search, $entries, $mysqli);
     </div>
 </div>
 
-
 <!-- Update form -->
 <div class="modal fade" id="updateItemModal" tabindex="-1" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form class="form-horizontal" id="updateItemForm" action="php_action/editItem.php" method="post">
+            <form class="form-horizontal" id="updateItemForm" action="" method="post">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -180,7 +185,7 @@ $result = performSearch($tableName, $search, $entries, $mysqli);
                 <div class="modal-body">
 
                     <!-- Hidden input for table name -->
-                    <input type="hidden" name="tableName" value="mk3">
+                    <input type="hidden" name="tableName" value="mk2">
 
                     <div class="form-group">
                         <label for="updateItemId" class="col-sm-4 control-label">Item ID: </label>
@@ -212,7 +217,7 @@ $result = performSearch($tableName, $search, $entries, $mysqli);
                     <button type="button" class="btn btn-default" data-dismiss="modal">
                         <i class="glyphicon glyphicon-remove-sign"></i> Close
                     </button>
-                    <button type="submit" class="btn btn-primary" id="updateItemBtn" name="update">
+                    <button type="submit" class="btn btn-primary" id="updateItemBtn">
                         <i class="glyphicon glyphicon-ok-sign"></i> Update Item
                     </button>
                 </div>
@@ -220,7 +225,30 @@ $result = performSearch($tableName, $search, $entries, $mysqli);
         </div>
     </div>
 </div>
-<script src="editItem.js"></script>
+
+
+<script>
+    function openUpdateForm(itemId, itemName, status) {
+        // Set the item details in the update form
+        document.getElementById("updateItemId").value = itemId;
+        document.getElementById("updateItemName").value = itemName;
+        document.getElementById("updateItemStatus").value = status;
+        document.getElementById("updateForm").style.display = "block";
+    }
+
+</script>
+
+<?php
+if (isset($_POST['update'])){
+    $item_id=$_POST['item_id'];
+    $item_name=$_POST['item_name'];
+    $status=$_POST['status'];
+    $result = mysqli_query($mysqli,"UPDATE mk2 SET item_id='$item_id', item_name='$item_name', status='$status' WHERE item_id='$item_id'") or die (mysqli_connect_error());
+    mysqli_close($mysqli);
+}
+
+?>
+
 <script src="addItem.js"></script>
 
 <?php include_once('layouts/footer.php'); ?>

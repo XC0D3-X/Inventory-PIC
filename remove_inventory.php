@@ -13,6 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<script>alert('Item removed successfully');</script>";
     } else {
         echo "<script>alert('Error removing item');</script>";
+        header("Location: {$_SERVER['PHP_SELF']}");
     }
 }
 ?>
