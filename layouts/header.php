@@ -12,7 +12,7 @@
   </head>
   <body>
     <header id="header">
-      <div class="logo pull-left"> OSWA - Inventory </div>
+      <div class="logo pull-left"> PIC KV Inventory </div>
       <div class="header-content">
       <div class="header-date pull-left">
         <strong><?php echo date('Y-m-d H:i a');?></strong>
