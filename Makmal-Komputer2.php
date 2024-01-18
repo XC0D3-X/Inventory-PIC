@@ -9,13 +9,13 @@ if (isset($_GET['table'])) {
     $tableName = $_GET['table'];
 }
 $entries = isset($_GET['entries']) ? $_GET['entries'] : 10;
-$page = isset($_GET['page']) ? $_GET['page'] : 1;
+
+$result = performSearch($tableName, $search, $entries, $mysqli);
 
 $page = isset($_GET['page']) ? $_GET['page'] : 1;
 
 $sort = isset($_GET['sort']) ? $_GET['sort'] : 'asc'; // Default: Ascending order
 
-$result = performSearch($tableName, $search, $entries, $mysqli);
 
 // Pagination logic
 $limit = $entries;
@@ -250,37 +250,12 @@ $result = mysqli_query($mysqli, $sql);
         </div>
     </div>
 </div>
+
+<button onclick="openPrintWindow()">Print Report</button>
+
+<script src="custom/report.js"></script>
+
 <script src="editItem.js"></script>
 <script src="addItem.js"></script>
-
-
-<!-- Pagination at the bottom -->
-<div class="col-md-12 mt-4">
-    <nav aria-label="Page navigation">
-        <ul class="pagination justify-content-center">
-            <?php if ($page > 1): ?>
-                <li class="page-item">
-                    <a class="page-link" href="?page=<?php echo ($page - 1); ?>&entries=<?php echo $entries; ?>&search=<?php echo $search; ?>&table=<?php echo $tableName; ?>" aria-label="Previous">
-                        <span aria-hidden="true">&laquo; Previous</span>
-                    </a>
-                </li>
-            <?php endif; ?>
-
-            <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                <li class="page-item <?php if ($i == $page) echo 'active'; ?>">
-                    <a class="page-link" href="?page=<?php echo $i; ?>&entries=<?php echo $entries; ?>&search=<?php echo $search; ?>&table=<?php echo $tableName; ?>"><?php echo $i; ?></a>
-                </li>
-            <?php endfor; ?>
-
-            <?php if ($page < $totalPages): ?>
-                <li class="page-item">
-                    <a class="page-link" href="?page=<?php echo ($page + 1); ?>&entries=<?php echo $entries; ?>&search=<?php echo $search; ?>&table=<?php echo $tableName; ?>" aria-label="Next">
-                        <span aria-hidden="true">Next &raquo;</span>
-                    </a>
-                </li>
-            <?php endif; ?>
-        </ul>
-    </nav>
-</div>
 
 <?php include_once('layouts/footer.php'); ?>
