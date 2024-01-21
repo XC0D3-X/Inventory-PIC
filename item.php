@@ -45,4 +45,5 @@ $result = mysqli_query($mysqli, "SELECT * FROM list ORDER BY no_id");
         </div>
     </div>
 </div>
+<button onclick="openPrintWindow()" class="btn-primary printbtn btn">Print Report</button>
 <?php include_once('layouts/footer.php'); ?>
