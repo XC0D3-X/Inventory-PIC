@@ -251,7 +251,6 @@ $result = mysqli_query($mysqli, $sql);
     </div>
 </div>
 
-<button onclick="openPrintWindow()">Print Report</button>
 
 <script src="custom/report.js"></script>
 
