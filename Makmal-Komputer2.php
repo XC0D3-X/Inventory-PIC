@@ -5,9 +5,7 @@ include_once('config.php');
 
 $tableName = 'mk2'; // Default table name
 $search = isset($_GET['search']) ? $_GET['search'] : '';
-if (isset($_GET['table'])) {
-    $tableName = $_GET['table'];
-}
+
 $entries = isset($_GET['entries']) ? $_GET['entries'] : 10;
 
 $result = performSearch($tableName, $search, $entries, $mysqli);
@@ -172,7 +170,7 @@ $result = mysqli_query($mysqli, $sql);
                             </tr>
                         </thead>
                         <tbody>
-                            <?php while ($res = mysqli_fetch_array($result)): ?>
+                            <?php while ($res = mysqli_fetch_array($result)):?>
                                 <tr>
                                     <td><?php echo $res['item_id']; ?></td>
                                     <td><?php echo $res['item_name']; ?></td>
@@ -181,6 +179,8 @@ $result = mysqli_query($mysqli, $sql);
                                         <center>
                                             <!-- Update Item button -->
                                             <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#updateItemModal" onclick="openUpdateForm('<?php echo $res['item_id']; ?>', '<?php echo $res['item_name']; ?>', '<?php echo $res['status']; ?>')">Update</button>
+                                            <button type="button" class="btn btn-danger btn-md delete-btn" data-toggle="modal" data-target="#deleteItemModal" data-id="<?php echo $res['item_id']; ?>">Delete</button>
+
                                         </center>
                                     </td>
                                 </tr>
@@ -195,6 +195,26 @@ $result = mysqli_query($mysqli, $sql);
     </div>
 </div>
 
+<!-- delete form -->
+<div class="modal fade" tabindex="-1" role="dialog" id="deleteItemModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title"><i class="glyphicon glyphicon-trash"></i> Remove Brand</h4>
+      </div>
+      <div class="modal-body">
+        <p>Do you really want to remove ?</p>
+      </div>
+      <div class="modal-footer removeCategoriesFooter">
+        <button type="button" class="btn btn-default" data-dismiss="modal"> <i class="glyphicon glyphicon-remove-sign"></i> Close</button>
+        <button type="button" class="btn btn-primary" id="removeCategoriesBtn" data-loading-text="Loading..."> <i class="glyphicon glyphicon-ok-sign"></i> Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- /delete form -->
 
 <!-- Update form -->
 <div class="modal fade" id="updateItemModal" tabindex="-1" role="dialog">
@@ -251,6 +271,10 @@ $result = mysqli_query($mysqli, $sql);
     </div>
 </div>
 
+<<<<<<< Updated upstream
+=======
+<button onclick="openPrintWindow('mk2')">Print Report</button>
+>>>>>>> Stashed changes
 
 <script src="custom/report.js"></script>
 

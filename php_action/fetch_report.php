@@ -1,6 +1,7 @@
 <?php
 include_once 'config.php';
 // Fetch data from the database
+
 $sql = "SELECT * FROM mk2";
 $result = $mysqli->query($sql);
 

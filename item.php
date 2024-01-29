@@ -41,6 +41,10 @@ $result = mysqli_query($mysqli, "SELECT * FROM list ORDER BY no_id");
                         ?>
                     </tbody>
                 </table>
+                
+                <button onclick="openPrintWindow()">Print Report</button>
+
+                <script src="custom/report.js"></script>
             </div>
         </div>
     </div>
